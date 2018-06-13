@@ -35,8 +35,9 @@ recipe.post('/add',(req,res)=>{
        const u_id = data[0].u_id;
 
             recipe_model.addRecipe(u_id,description,ingridients)
-            .then((data)=>{
-                image_model.registerImage(fileName,data.uuid).
+            .then((uuid)=>{
+                console.log(uuid);
+                image_model.registerImage(fileName,uuid).
                 then(filepath=>{
 
                     res.status(200).json({

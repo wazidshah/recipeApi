@@ -6,7 +6,7 @@ const connection =  function()
 {
     
     const  con =  mysql.createConnection({
-        host: "sql12.freemysqlhosting.net",
+        host: "localhost",
         user:config.DATABASE_USERNAME,
         password:config.DATABSE_PASSWORD,
         database:config.DATABASE_NAME
