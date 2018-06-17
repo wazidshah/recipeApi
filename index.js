@@ -14,6 +14,8 @@ app.use(express.static('public'));
 const userRoute = require('./routes/user_route');
 const recipeRoute = require('./routes/recipe_route');
 const uploadRoute = require('./routes/upload_route');
+const adminRoute = require('./routes/admin_route');
+
 
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true })); 
@@ -21,6 +23,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/user',userRoute);
 app.use('/recipe',recipeRoute);
 app.use('/image',uploadRoute);
+app.use('/admin',adminRoute);
+
 
 app.get('/',(req,res)=>{
     res.json('Welcome To Recipe Api');   

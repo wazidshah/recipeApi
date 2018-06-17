@@ -30,8 +30,15 @@ recipe.post('/add',(req,res)=>{
     const description = req.body.description;
     const ingridients = req.body.ingridients;
     const fileName = req.body.fileName;
-    user_model.tokenExists(api_key)
+    user_model.isAdmin(api_key)
     .then((data)=>{
+
+        if(data.length==0)
+        {
+            res.status(401).json({message:"Unauthorized"});
+            return;
+        }
+
        const u_id = data[0].u_id;
 
             recipe_model.addRecipe(u_id,description,ingridients)
@@ -85,7 +92,14 @@ recipe.post('/getComments',(req,res)=>{
     });
 });
 
-
+recipe.post('/getComment',(req,res)=>{
+    const id = req.body.recipeId;
+    recipe_model.getCommentById(id)
+    .then(data=>{
+       
+        res.status(200).json(data);
+    });
+});
 
 
 module.exports=recipe;

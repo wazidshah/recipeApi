@@ -60,7 +60,7 @@ const addRecipe = (u_id,description,ingridients)=>{
 
 const addComment = (r_id,comment,from_user)=>{
     //db = new Database();
-   
+   console.log(r_id,comment);
     return new Promise((success,reject)=>{
         uuid.getUUID().then((uuid)=>{
             let query = `insert into ${COMMENT_TABLE} values('${uuid}','${r_id}','${comment}','${from_user}')`;
@@ -88,7 +88,22 @@ const getAllComments = ()=>{
         });
 }
 
+const getCommentById = (id)=>{
+    //db = new Database();
+    return new Promise((success,reject)=>{
+        uuid.getUUID().then((uuid)=>{
+            let query = `select ${C_R_ID},${COMMENT} from ${COMMENT_TABLE} where ${C_R_ID}='${id}'`;
+
+            db.execute(query).then(data=>{
+                    success(data);
+                }).catch(err=>reject(err));
+            });
+
+        });
+}
+
 module.exports.addComment = addComment;
 module.exports.getAllComments = getAllComments;
 module.exports.getAll = getAll;
 module.exports.addRecipe = addRecipe;
+module.exports.getCommentById = getCommentById;

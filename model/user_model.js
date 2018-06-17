@@ -6,6 +6,11 @@ const USERNAME = 'username';
 const PASSWORD = 'password';
 const TOKEN = 'token';
 const USER_TABLE = 'user';
+const TYPE = 'type';
+const typeEnum = {
+    NORMAL:'normal',
+    ADMIN:'admin'
+} 
 
 const getUserByUserName=(username)=>{
      //db = new Database();
@@ -67,7 +72,31 @@ const tokenExists = (token)=>{
     
 }
 
+
+const getAdmin= (username,password)=>{
+    let query =`select ${U_ID},${TOKEN} from ${USER_TABLE} where ${USERNAME}='${username}' and ${TYPE}='${typeEnum.ADMIN}' and ${PASSWORD}='${password}'`;
+
+    return new Promise((success,reject)=>{
+        db.execute(query).then(data=>{
+            success(data);
+        }).catch(err=>reject(err));
+    });
+}
+
+
+const isAdmin=(token)=>{
+    let query =`select ${U_ID},${TOKEN} from ${USER_TABLE} where ${TOKEN}='${token}' and ${TYPE}='${typeEnum.ADMIN}'`;
+
+    return new Promise((success,reject)=>{
+        db.execute(query).then(data=>{
+            success(data);
+        }).catch(err=>reject(err));
+    });
+}
+
 module.exports.getUserByUserName = getUserByUserName;
 module.exports.userExists = userExists;
 module.exports.signUp = signUp;
 module.exports.tokenExists = tokenExists;
+module.exports.getAdmin = getAdmin;
+module.exports.isAdmin = isAdmin;
